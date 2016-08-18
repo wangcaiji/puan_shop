@@ -12,6 +12,16 @@
     <link rel="stylesheet" href="{{ asset('/shop/css/style.css') }}"/>
 </head>
 <body class="index">
+<body class="index" >
+<!--提示框-->
+@if(!empty($fromUrl) && $fromUrl=='tnb')
+<div  class="noticeBox" >
+	<img  src='/shop/images/notice.png'/>
+	<a class="noticeBtn" ></a>
+</div>
+<div class="noticeBg"></div>
+@endif
+<!---end-->
 <header>
     <form class="search-wrapper" action="/shop/search" method="post">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">

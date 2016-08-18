@@ -10,6 +10,7 @@ use App\Models\Customer;
 use App\Models\Order;
 use App\Models\ProductSpecification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use App\Models\Product;
 use App\Models\Address;
 
@@ -24,8 +25,8 @@ class ShopController extends Controller
      */
     public function __construct()
     {
-        $this->customerID = \Session::get(\Config::get('constants.SESSION_USER_KEY'))->id;
-        $this->openID = \Session::get(\Config::get('constants.SESSION_USER_KEY'))->openid;
+        // $this->customerID = \Session::get(\Config::get('constants.SESSION_USER_KEY'))->id;
+        // $this->openID = \Session::get(\Config::get('constants.SESSION_USER_KEY'))->openid;
     }
 
     /**
@@ -40,14 +41,29 @@ class ShopController extends Controller
      */
     public function index()
     {
+		$fromUrl = Input::get('fromUrl');
         $categories = array_chunk(Category::where('is_banner', 1)->get()->toArray(), 8);
         return view('shop.index', [
             'products' => Product::where('supplier_id', 1)->orderBy('weight', 'desc')->get(),
             'catArrays' => $categories,
             'activities' => Activity::all(),
             'cartCount' => sizeof(\Redis::command('HKEYS', ['user_id:' . $this->customerID])),
-            'banners' => Banner::orderBy('weight', 'desc')->get()
+            'banners' => Banner::orderBy('weight', 'desc')->get(),
+			'fromUrl' => $fromUrl
         ]);
+    }
+	
+	    /**
+     * test
+     *
+     * @return \Illuminate\Http\Response
+     */
+	    public function wangcaiji()
+    {	
+		$fromUrl = Input::get('fromUrl');
+        return view('shop.wangcaiji',[
+            'fromUrl' => $fromUrl
+		]);
     }
 
     /**
