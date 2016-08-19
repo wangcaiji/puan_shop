@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html>
 <head>
@@ -217,6 +218,11 @@
             event.stopPropagation();
         });
 
+		 $('noticeBtn').on('click', function () {
+            $('.noticeBox').hide();
+			$('.noticeBg').hide();
+        });
+		
         $(document.body).on('click', function () {
             $('.sub-menu').fadeOut();
         });
